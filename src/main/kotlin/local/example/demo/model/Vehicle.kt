@@ -23,5 +23,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "vehicles")
 data class Vehicle(
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+        @Column(name = "vehicle_id")
+        val id: Long = 0,
+        @Column(name = "vehicle_brand")
+        var brand: String?,
+        @Column(name = "vehicle_name")
+        var name: String?
         )
