@@ -1,7 +1,7 @@
 # automotive-handler-demo
 Demo of the RESTful web service with Spring Boot in the Kotlin programming language
 
-##I get default items saved with LoadVehicleItems.kt class from vehicles table:
+### I get default items saved with LoadVehicleItems.kt class from vehicles table:
 ```
 $ curl -v -i http://127.0.0.1:9090/api/vehicles
 *   Trying 127.0.0.1...
@@ -68,7 +68,7 @@ Date: Fri, 21 Sep 2018 06:31:40 GMT
 }
 ```
 
-##I __create__ a new item in vehicles table:
+### I __create__ a new item in vehicles table:
 ```
 $ curl -H "Content-Type:application/json" --data '{"brand":"Minivan Inc.","name":"Tour 1800"}' http://127.0.0.1:9090/api/vehicles
 {
@@ -85,12 +85,12 @@ $ curl -H "Content-Type:application/json" --data '{"brand":"Minivan Inc.","name"
 }
 ```
 
-##I __read__ a new item in vehicles table:
+### I __read__ a new item in vehicles table:
 ```
 $ curl -v -i http://127.0.0.1:9090/api/vehicles/4
 ```
 
-##I __update__ item four from vehicles table:
+### I __update__ item four from vehicles table:
 ```
 $ curl -v -i -X PUT -H "Content-Type:application/json" --data '{"brand":"Maxivan Inc.","name":"GT 2500"}' http://127.0.0.1:9090/api/vehicles/4
 *   Trying 127.0.0.1...
@@ -131,7 +131,7 @@ Date: Fri, 21 Sep 2018 06:53:09 GMT
 }
 ```
 
-##I __partial__ __update__ item four from vehicles table:
+### I __partial__ __update__ item four from vehicles table:
 ```
 $ curl v -i -X PATCH -H "Content-Type:application/json" --data '{"name":"GT 2000"}' http://127.0.0.1:9090/api/vehicles/4
 *   Trying 127.0.0.1...
@@ -171,7 +171,7 @@ Date: Fri, 21 Sep 2018 07:21:48 GMT
 * Connection #0 to host 127.0.0.1 left intact
 }
 ```
-##I __delete__ item four from the vehicles table:
+### I __delete__ item four from the vehicles table:
 ```
 $ curl -v -i -X DELETE http://127.0.0.1:9090/api/vehicles/4
 *   Trying 127.0.0.1...
