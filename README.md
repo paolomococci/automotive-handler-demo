@@ -88,6 +88,37 @@ $ curl -H "Content-Type:application/json" --data '{"brand":"Minivan Inc.","name"
 ### I __read__ a new item in vehicles table:
 ```
 $ curl -v -i http://127.0.0.1:9090/api/vehicles/4
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 9090 (#0)
+> GET /api/vehicles/4 HTTP/1.1
+> Host: 127.0.0.1:9090
+> User-Agent: curl/7.59.0
+> Accept: */*
+> 
+< HTTP/1.1 200 
+HTTP/1.1 200 
+< Content-Type: application/hal+json;charset=UTF-8
+Content-Type: application/hal+json;charset=UTF-8
+< Transfer-Encoding: chunked
+Transfer-Encoding: chunked
+< Date: Fri, 21 Sep 2018 06:52:32 GMT
+Date: Fri, 21 Sep 2018 06:52:32 GMT
+
+< 
+{
+  "brand" : "Minivan Inc.",
+  "name" : "Tour 1800",
+  "_links" : {
+    "self" : {
+      "href" : "http://127.0.0.1:9090/api/vehicles/4"
+    },
+    "vehicles" : {
+      "href" : "http://127.0.0.1:9090/api/vehicles"
+    }
+  }
+* Connection #0 to host 127.0.0.1 left intact
+}
 ```
 
 ### I __update__ item four from vehicles table:
