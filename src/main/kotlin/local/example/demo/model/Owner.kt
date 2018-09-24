@@ -21,7 +21,7 @@ package local.example.demo.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "owners")
+@Table(name = "vehicle_owner")
 data class Owner(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "owner_id")
