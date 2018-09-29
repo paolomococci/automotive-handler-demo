@@ -20,5 +20,7 @@ package local.example.demo.repository
 
 import local.example.demo.model.Vehicle
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
+@RepositoryRestResource
 interface VehicleRepository : JpaRepository<Vehicle, Long>
