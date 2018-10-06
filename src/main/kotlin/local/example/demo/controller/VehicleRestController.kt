@@ -57,6 +57,7 @@ class VehicleRestController internal constructor (
     @Throws(URISyntaxException::class)
     internal fun readAll(): Resources<Resource<Vehicle>> {
         val vehicles = vehicleRepository.findAll()
+                .asSequence()
                 .map(vehicleResourceAssembler::toResource).toList()
         return Resources(vehicles,
                 linkTo(methodOn(VehicleRestController::class.java)
