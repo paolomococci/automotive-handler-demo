@@ -30,5 +30,10 @@ class Owner {
     @Column(nullable = false) var surname: String = ""
     @Column(nullable = false) var birthday: String = ""
     @OneToMany(mappedBy = "domicile") val domiciles: List<Address>? = null
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(name = "vehicle_owner",
+            joinColumns = [JoinColumn(name = "vehicle_id", referencedColumnName = "id")],
+            inverseJoinColumns = [JoinColumn(name = "owner_id", referencedColumnName = "id")])
+    val vehicles: List<Vehicle>? = null
     constructor()
 }
