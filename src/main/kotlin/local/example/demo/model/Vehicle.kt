@@ -18,16 +18,17 @@
 
 package local.example.demo.model
 
+import org.hibernate.annotations.NaturalId
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "vehicle")
-data class Vehicle(
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
-        @Column(name = "vehicle_id")
-        val id: Long = 0,
-        @Column(name = "vehicle_brand")
-        var brand: String?,
-        @Column(name = "vehicle_name")
-        var name: String?
-        )
+class Vehicle {
+    @Id @GeneratedValue val id: Long = 0
+    @NaturalId @Column(nullable = false) val chassis: String = "chassis" + Date().time.toString()
+    @Column var model: String? = null
+    @Column var name: String? = null
+    @Column var plate: String? = null
+    @ManyToOne @JoinColumn(name = "brand_id") var brand: Brand? = null
+    constructor()
+}
