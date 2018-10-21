@@ -30,5 +30,7 @@ class Vehicle {
     @Column var name: String? = null
     @Column var plate: String? = null
     @ManyToOne @JoinColumn(name = "brand_id") var brand: Brand? = null
+    @ManyToMany(targetEntity = Owner::class, mappedBy = "vehicles",fetch = FetchType.LAZY)
+    val owners: List<Owner>? = null
     constructor()
 }
