@@ -66,4 +66,70 @@ class AddressRestController internal constructor(
                 ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
                         .readAll()).withSelfRel())
     }
+
+    @GetMapping("/region/{region}")
+    @Throws(URISyntaxException::class)
+    internal fun listByRegion(@PathVariable region: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByRegion(region)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
+
+    @GetMapping("/city/{city}")
+    @Throws(URISyntaxException::class)
+    internal fun listByCity(@PathVariable city: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByCity(city)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
+
+    @GetMapping("/zip/{zip}")
+    @Throws(URISyntaxException::class)
+    internal fun listByZip(@PathVariable zip: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByZip(zip)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
+
+    @GetMapping("/avenue/{avenue}")
+    @Throws(URISyntaxException::class)
+    internal fun listByAvenue(@PathVariable avenue: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByAvenue(avenue)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
+
+    @GetMapping("/civic/{civic}")
+    @Throws(URISyntaxException::class)
+    internal fun listByCivic(@PathVariable civic: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByCivic(civic)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
+
+    @GetMapping("/internal/{internal}")
+    @Throws(URISyntaxException::class)
+    internal fun listByInternal(@PathVariable internal: String?): Resources<Resource<Address>> {
+        val address = addressRepository.searchByInternal(internal)
+                .asSequence()
+                .map(addressResourceAssembler::toResource).toList()
+        return Resources(address,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
 }
