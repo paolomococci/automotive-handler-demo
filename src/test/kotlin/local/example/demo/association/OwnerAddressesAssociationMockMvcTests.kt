@@ -39,8 +39,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class OwnerAddressesAssociationMockMvcTests {
 
     val owner: String = """{"nickname":"martha89","name":"Martha","surname":"Miller","birthday":"1989/03/26"}"""
-    val address1: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"05774","avenue":"Ling Road","civic":"42","internal":"D"}"""
-    val address2: String = """{"country":"Thailand","region":"east","city":"Rayong","zip":"03784","avenue":"Me Plaza","civic":"16","internal":"B"}"""
+    val address1: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"50000","avenue":"Ling Road","civic":"42","internal":"D"}"""
+    val address2: String = """{"country":"Thailand","region":"east","city":"Rayong","zip":"21000","avenue":"Me Plaza","civic":"16","internal":"B"}"""
 
     @Autowired
     private val mockMvc: MockMvc? = null
