@@ -23,4 +23,7 @@ import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @RepositoryRestResource
-interface AddressRepository : PagingAndSortingRepository<Address, Long>
+interface AddressRepository : PagingAndSortingRepository<Address, Long> {
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESSES WHERE COUNTRY LIKE ?1%")
+    fun searchByCountry(@Param("country") country: String?): List<Address>
+}
