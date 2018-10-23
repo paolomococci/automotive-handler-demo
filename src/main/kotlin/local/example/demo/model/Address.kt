@@ -16,11 +16,22 @@
  *
  */
 
-package local.example.demo.repository
+package local.example.demo.model
 
-import local.example.demo.model.Vehicle
-import org.springframework.data.repository.PagingAndSortingRepository
-import org.springframework.data.rest.core.annotation.RepositoryRestResource
+import org.hibernate.annotations.NaturalId
+import javax.persistence.*
 
-@RepositoryRestResource
-interface VehicleRepository : PagingAndSortingRepository<Vehicle, Long>
+@Entity
+class Address {
+    @Id @GeneratedValue val id: Long = 0
+    @Column var country: String? = null
+    @Column var region: String? = null
+    @Column var city: String? = null
+    @Column var zip: String? = null
+    @Column var avenue: String? = null
+    @Column var civic: String? = null
+    @Column var internal: String? = null
+    @ManyToOne @JoinColumn(name = "factory_id") var filial: Brand? = null
+    @ManyToOne @JoinColumn(name = "owner_id") var domicile: Owner? = null
+    constructor()
+}

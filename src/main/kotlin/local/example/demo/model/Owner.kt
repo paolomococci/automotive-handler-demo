@@ -18,16 +18,22 @@
 
 package local.example.demo.model
 
+import org.hibernate.annotations.NaturalId
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "vehicle_owner")
-data class Owner(
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "owner_id")
-        val id: Long = 0,
-        @Column(name = "owner_first_name")
-        var firstName: String?,
-        @Column(name = "owner_last_name")
-        var lastName: String?
-        )
+class Owner {
+    @Id @GeneratedValue val id: Long = 0
+    @NaturalId @Column(nullable = false) val nickname: String = "j" + Date().time.toString()
+    @Column(nullable = false) var name: String = ""
+    @Column(nullable = false) var surname: String = ""
+    @Column(nullable = false) var birthday: String = ""
+    @OneToMany(mappedBy = "domicile") val domiciles: List<Address>? = null
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(name = "vehicle_owner",
+            joinColumns = [JoinColumn(name = "vehicle_id", referencedColumnName = "id")],
+            inverseJoinColumns = [JoinColumn(name = "owner_id", referencedColumnName = "id")])
+    val vehicles: List<Vehicle>? = null
+    constructor()
+}

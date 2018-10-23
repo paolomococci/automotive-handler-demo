@@ -18,9 +18,9 @@
 
 package local.example.demo.repository
 
-import local.example.demo.model.Vehicle
+import local.example.demo.model.Brand
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @RepositoryRestResource
-interface VehicleRepository : PagingAndSortingRepository<Vehicle, Long>
+interface BrandRepository : PagingAndSortingRepository<Brand, Long>

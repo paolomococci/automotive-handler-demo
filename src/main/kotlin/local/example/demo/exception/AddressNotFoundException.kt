@@ -16,11 +16,8 @@
  *
  */
 
-package local.example.demo.repository
+package local.example.demo.exception
 
-import local.example.demo.model.Vehicle
-import org.springframework.data.repository.PagingAndSortingRepository
-import org.springframework.data.rest.core.annotation.RepositoryRestResource
+import java.lang.RuntimeException
 
-@RepositoryRestResource
-interface VehicleRepository : PagingAndSortingRepository<Vehicle, Long>
+class AddressNotFoundException(id: Long?) : RuntimeException("could not find address id: $id")

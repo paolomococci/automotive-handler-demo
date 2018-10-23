@@ -24,11 +24,11 @@ import local.example.demo.model.Owner
 import local.example.demo.repository.OwnerRepository
 import org.springframework.hateoas.Resource
 import org.springframework.hateoas.Resources
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
-import java.net.URI
+import org.springframework.hateoas.mvc.ControllerLinkBuilder
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.net.URISyntaxException
 
 @RestController
@@ -37,14 +37,6 @@ class OwnerRestController internal constructor(
         private val ownerRepository: OwnerRepository,
         private val ownerResourceAssembler: OwnerResourceAssembler
 ) {
-
-    @PostMapping
-    @Throws(URISyntaxException::class)
-    internal fun create(@RequestBody owner: Owner): ResponseEntity<Resource<Owner>> {
-        val resource = ownerResourceAssembler.toResource(ownerRepository.saveAndFlush(owner))
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
     @GetMapping("/{id}")
     @Throws(URISyntaxException::class)
     internal fun read(@PathVariable id: Long?): Resource<Owner> {
@@ -57,50 +49,10 @@ class OwnerRestController internal constructor(
     @Throws(URISyntaxException::class)
     internal fun readAll(): Resources<Resource<Owner>> {
         val owners = ownerRepository.findAll()
+                .asSequence()
                 .map(ownerResourceAssembler::toResource).toList()
         return Resources(owners,
-                linkTo(methodOn(OwnerRestController::class.java)
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(OwnerRestController::class.java)
                         .readAll()).withSelfRel())
-    }
-
-    @PutMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun update(@RequestBody owner: Owner, @PathVariable id: Long?): ResponseEntity<*> {
-        val updated = ownerRepository.findById(id!!)
-                .map { temp ->
-                    temp.firstName = owner.firstName
-                    temp.lastName = owner.lastName
-                    ownerRepository.saveAndFlush(temp)
-                }
-                .orElseGet {
-                    ownerRepository.saveAndFlush(owner)
-                }
-        val resource = ownerResourceAssembler.toResource(updated)
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
-    @PatchMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun partialUpdate(@RequestBody owner: Owner, @PathVariable id: Long?): ResponseEntity<*> {
-        val updated = ownerRepository.findById(id!!)
-                .map { temp ->
-                    if (!owner.firstName.isNullOrBlank()) temp.firstName = owner.firstName
-                    if (!owner.lastName.isNullOrBlank()) temp.lastName = owner.lastName
-                    ownerRepository.saveAndFlush(temp)
-                }
-                .orElseGet {
-                    ownerRepository.saveAndFlush(owner)
-                }
-        val resource = ownerResourceAssembler.toResource(updated)
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
-    @DeleteMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun cancel(@PathVariable id: Long?): ResponseEntity<*> {
-        if (id != null) {
-            ownerRepository.deleteById(id)
-        }
-        return ResponseEntity.noContent().build<Any>()
     }
 }

@@ -18,10 +18,10 @@
 
 package local.example.demo.controller
 
-import local.example.demo.assembler.VehicleResourceAssembler
-import local.example.demo.exception.VehicleNotFoundException
-import local.example.demo.model.Vehicle
-import local.example.demo.repository.VehicleRepository
+import local.example.demo.assembler.BrandResourceAssembler
+import local.example.demo.exception.BrandNotFoundException
+import local.example.demo.model.Brand
+import local.example.demo.repository.BrandRepository
 import org.springframework.hateoas.Resource
 import org.springframework.hateoas.Resources
 import org.springframework.hateoas.mvc.ControllerLinkBuilder
@@ -32,27 +32,27 @@ import org.springframework.web.bind.annotation.RestController
 import java.net.URISyntaxException
 
 @RestController
-@RequestMapping("/api/vehicles")
-class VehicleRestController internal constructor(
-        private val vehicleRepository: VehicleRepository,
-        private val vehicleResourceAssembler: VehicleResourceAssembler
+@RequestMapping("/api/brands")
+class BrandRestController internal constructor(
+        val brandRepository: BrandRepository,
+        val brandResourceAssembler: BrandResourceAssembler
 ) {
     @GetMapping("/{id}")
     @Throws(URISyntaxException::class)
-    internal fun read(@PathVariable id: Long?): Resource<Vehicle> {
-        val vehicle = vehicleRepository.findById(id!!)
-                .orElseThrow { VehicleNotFoundException(id) }
-        return vehicleResourceAssembler.toResource(vehicle)
+    internal fun read(@PathVariable id: Long?): Resource<Brand> {
+        val brand = brandRepository.findById(id!!)
+                .orElseThrow{ BrandNotFoundException(id) }
+        return brandResourceAssembler.toResource(brand)
     }
 
     @GetMapping
     @Throws(URISyntaxException::class)
-    internal fun readAll(): Resources<Resource<Vehicle>> {
-        val vehicles = vehicleRepository.findAll()
+    internal fun readAll(): Resources<Resource<Brand>> {
+        val brands = brandRepository.findAll()
                 .asSequence()
-                .map(vehicleResourceAssembler::toResource).toList()
-        return Resources(vehicles,
-                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java)
+                .map(brandResourceAssembler::toResource).toList()
+        return Resources(brands,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
                         .readAll()).withSelfRel())
     }
 }
