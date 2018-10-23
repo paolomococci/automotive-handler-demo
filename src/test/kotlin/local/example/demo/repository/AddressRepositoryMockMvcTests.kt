@@ -38,7 +38,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 @AutoConfigureMockMvc
 class AddressRepositoryMockMvcTests {
 
-    val item: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"05774","avenue":"Chang Road","civic":"123","internal":"A"}"""
+    val item: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"50000","avenue":"Chang Road","civic":"123","internal":"A"}"""
 
     @Autowired
     val mockMvc: MockMvc? = null
@@ -76,7 +76,7 @@ class AddressRepositoryMockMvcTests {
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.country").value("Thailand"))
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.region").value("north"))
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Chiang Mai"))
-                ?.andExpect(MockMvcResultMatchers.jsonPath("$.zip").value("05774"))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.zip").value("50000"))
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.avenue").value("Chang Road"))
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.civic").value("123"))
                 ?.andExpect(MockMvcResultMatchers.jsonPath("$.internal").value("A"))
