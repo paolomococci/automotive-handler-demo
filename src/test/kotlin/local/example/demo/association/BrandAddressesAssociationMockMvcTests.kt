@@ -39,8 +39,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class BrandAddressesAssociationMockMvcTests {
 
     val brand: String = """{"code":"TC987325714","name":"Acme Five-Stars"}"""
-    val address1: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"05774","avenue":"Chang Road","civic":"12-42"}"""
-    val address2: String = """{"country":"Thailand","region":"center","city":"Lopburi","zip":"03784","avenue":"Chang Main","civic":"14-36"}"""
+    val address1: String = """{"country":"Thailand","region":"north","city":"Chiang Mai","zip":"50000","avenue":"Chang Road","civic":"12-42"}"""
+    val address2: String = """{"country":"Thailand","region":"center","city":"Lopburi","zip":"15000","avenue":"Chang Main","civic":"14-36"}"""
 
     @Autowired
     private val mockMvc: MockMvc? = null
