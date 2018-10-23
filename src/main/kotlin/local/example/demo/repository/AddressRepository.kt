@@ -19,11 +19,25 @@
 package local.example.demo.repository
 
 import local.example.demo.model.Address
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @RepositoryRestResource
 interface AddressRepository : PagingAndSortingRepository<Address, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESSES WHERE COUNTRY LIKE ?1%")
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE COUNTRY LIKE ?1%")
     fun searchByCountry(@Param("country") country: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE REGION LIKE ?1%")
+    fun searchByRegion(@Param("region") region: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE CITY LIKE ?1%")
+    fun searchByCity(@Param("city") city: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE ZIP LIKE ?1%")
+    fun searchByZip(@Param("zip") zip: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE AVENUE LIKE ?1%")
+    fun searchByAvenue(@Param("avenue") avenue: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE CIVIC LIKE ?1%")
+    fun searchByCivic(@Param("civic") civic: String?): List<Address>
+    @Query(nativeQuery = true, value = "SELECT * FROM ADDRESS WHERE INTERNAL LIKE ?1%")
+    fun searchByInternal(@Param("internal") internal: String?): List<Address>
 }
