@@ -24,27 +24,19 @@ import local.example.demo.model.Vehicle
 import local.example.demo.repository.VehicleRepository
 import org.springframework.hateoas.Resource
 import org.springframework.hateoas.Resources
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
-import java.net.URI
+import org.springframework.hateoas.mvc.ControllerLinkBuilder
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.net.URISyntaxException
 
 @RestController
 @RequestMapping("/api/vehicles")
-class VehicleRestController internal constructor (
+class VehicleRestController internal constructor(
         private val vehicleRepository: VehicleRepository,
         private val vehicleResourceAssembler: VehicleResourceAssembler
 ) {
-
-    @PostMapping
-    @Throws(URISyntaxException::class)
-    internal fun create(@RequestBody vehicle: Vehicle): ResponseEntity<Resource<Vehicle>> {
-        val resource = vehicleResourceAssembler.toResource(vehicleRepository.saveAndFlush(vehicle))
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
     @GetMapping("/{id}")
     @Throws(URISyntaxException::class)
     internal fun read(@PathVariable id: Long?): Resource<Vehicle> {
@@ -60,48 +52,7 @@ class VehicleRestController internal constructor (
                 .asSequence()
                 .map(vehicleResourceAssembler::toResource).toList()
         return Resources(vehicles,
-                linkTo(methodOn(VehicleRestController::class.java)
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java)
                         .readAll()).withSelfRel())
-    }
-
-    @PutMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun update(@RequestBody vehicle: Vehicle, @PathVariable id: Long?): ResponseEntity<*> {
-        val updated = vehicleRepository.findById(id!!)
-                .map { temp ->
-                    temp.brand = vehicle.brand
-                    temp.name = vehicle.name
-                    vehicleRepository.saveAndFlush(temp)
-                }
-                .orElseGet {
-                    vehicleRepository.saveAndFlush(vehicle)
-                }
-        val resource = vehicleResourceAssembler.toResource(updated)
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
-    @PatchMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun partialUpdate(@RequestBody vehicle: Vehicle, @PathVariable id: Long?): ResponseEntity<*> {
-        val updated = vehicleRepository.findById(id!!)
-                .map { temp ->
-                    if (!vehicle.brand.isNullOrBlank()) temp.brand = vehicle.brand
-                    if (!vehicle.name.isNullOrBlank()) temp.name = vehicle.name
-                    vehicleRepository.saveAndFlush(temp)
-                }
-                .orElseGet {
-                    vehicleRepository.saveAndFlush(vehicle)
-                }
-        val resource = vehicleResourceAssembler.toResource(updated)
-        return ResponseEntity.created(URI(resource.id.expand().href)).body(resource)
-    }
-
-    @DeleteMapping("/{id}")
-    @Throws(URISyntaxException::class)
-    internal fun cancel(@PathVariable id: Long?): ResponseEntity<*> {
-        if (id != null) {
-            vehicleRepository.deleteById(id)
-        }
-        return ResponseEntity.noContent().build<Any>()
     }
 }
