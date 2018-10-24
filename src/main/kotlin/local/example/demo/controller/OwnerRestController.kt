@@ -55,4 +55,15 @@ class OwnerRestController internal constructor(
                 ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(OwnerRestController::class.java)
                         .readAll()).withSelfRel())
     }
+
+    @GetMapping("/surname/{surname}")
+    @Throws(URISyntaxException::class)
+    internal fun listBySurname(@PathVariable surname: String?): Resources<Resource<Owner>> {
+        val owners = ownerRepository.searchBySurname(surname)
+                .asSequence()
+                .map(ownerResourceAssembler::toResource).toList()
+        return Resources(owners,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(OwnerRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
 }
