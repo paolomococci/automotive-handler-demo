@@ -19,8 +19,13 @@
 package local.example.demo.repository
 
 import local.example.demo.model.Owner
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @RepositoryRestResource
-interface OwnerRepository : PagingAndSortingRepository<Owner, Long>
+interface OwnerRepository : PagingAndSortingRepository<Owner, Long> {
+    @Query(nativeQuery = true, value = "SELECT * FROM OWNER WHERE SURNAME LIKE ?1%")
+    fun searchBySurname(@Param("surname") surname: String?): List<Owner>
+}
