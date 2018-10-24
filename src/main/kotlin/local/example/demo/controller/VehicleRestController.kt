@@ -55,4 +55,15 @@ class VehicleRestController internal constructor(
                 ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java)
                         .readAll()).withSelfRel())
     }
+
+    @GetMapping("/model/{model}")
+    @Throws(URISyntaxException::class)
+    internal fun ListByModel(@PathVariable model: String?): Resources<Resource<Vehicle>> {
+        val vehicles = vehicleRepository.searchByModel(model)
+                .asSequence()
+                .map(vehicleResourceAssembler::toResource).toList()
+        return Resources(vehicles,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
 }
