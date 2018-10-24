@@ -19,8 +19,13 @@
 package local.example.demo.repository
 
 import local.example.demo.model.Brand
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 @RepositoryRestResource
-interface BrandRepository : PagingAndSortingRepository<Brand, Long>
+interface BrandRepository : PagingAndSortingRepository<Brand, Long> {
+    @Query(nativeQuery = true, value = "SELECT * FROM BRAND WHERE CODE LIKE ?1%")
+    fun searchByCode(@Param("code") code: String?): List<Brand>
+}
