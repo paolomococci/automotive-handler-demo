@@ -55,4 +55,15 @@ class BrandRestController internal constructor(
                 ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(AddressRestController::class.java)
                         .readAll()).withSelfRel())
     }
+
+    @GetMapping("/code/{code}")
+    @Throws(URISyntaxException::class)
+    internal fun listByCode(@PathVariable code: String?): Resources<Resource<Brand>> {
+        val brands = brandRepository.searchByCode(code)
+                .asSequence()
+                .map(brandResourceAssembler::toResource).toList()
+        return Resources(brands,
+                ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(BrandRestController::class.java)
+                        .readAll()).withSelfRel())
+    }
 }
