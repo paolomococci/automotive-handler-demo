@@ -25,7 +25,7 @@ import javax.persistence.*
 @Entity
 class Brand {
     @Id @GeneratedValue val id: Long = 0
-    @NaturalId @Column(nullable = false) val code: String = "default" + Date().time.toString()
+    @NaturalId @Column(nullable = false) val code: String = """default${Date().time}"""
     @Column var name: String? = null
     @OneToMany(mappedBy = "brand") val vehicles: List<Vehicle>? = null
     @OneToMany(mappedBy = "filial") val addresses: List<Address>? = null
