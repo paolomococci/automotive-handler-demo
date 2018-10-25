@@ -25,7 +25,7 @@ import javax.persistence.*
 @Entity
 class Owner {
     @Id @GeneratedValue val id: Long = 0
-    @NaturalId @Column(nullable = false) val nickname: String = "j" + Date().time.toString()
+    @NaturalId @Column(nullable = false) val nickname: String = """john${Date().time}"""
     @Column(nullable = false) var name: String = ""
     @Column(nullable = false) var surname: String = ""
     @Column(nullable = false) var birthday: String = ""
