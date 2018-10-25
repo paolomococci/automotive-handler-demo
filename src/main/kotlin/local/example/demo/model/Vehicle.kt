@@ -25,7 +25,7 @@ import javax.persistence.*
 @Entity
 class Vehicle {
     @Id @GeneratedValue val id: Long = 0
-    @NaturalId @Column(nullable = false) val chassis: String = "chassis" + Date().time.toString()
+    @NaturalId @Column(nullable = false) val chassis: String = """chassis${Date().time}"""
     @Column var model: String? = null
     @Column var name: String? = null
     @Column var plate: String? = null
